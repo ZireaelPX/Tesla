@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tesla Cybertruck</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.min.css">
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=d34ac4cd-d7e1-4834-becb-e910a58d2771&lang=en_US"
+            type="text/javascript">
+    </script>
+</head>
+<body id="body">
+<div class="wrapper">
+    <header class="header">
+        <div class="__container-fluid">
+            <div class="header__block">
+                <div class="header__menu menu">
+                    <div class="menu-icon">
+                        <span></span>
+                    </div>
+                    <div class="menu-nav">
+                        <div class="__container">
+                            <div class="menu-flex">
+                                <ul class="menu-nav__list">
+                                    <li><a class="menu-nav__link" href="index.html">Главная</a></li>
+                                    <li><a class="menu-nav__link" href="cybertruck.html">Tesla Cybertruck</a></li>
+                                    <li><a class="menu-nav__link" href="news-page.html">Новости</a></li>
+                                    <li><a class="menu-nav__link" href="partners.html">Наши салоны</a></li>
+                                </ul>
+                                <label class="menu-copyright">Tesla © 2024</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-logo__img">
+                    <a href="index.html" class="">
+                        <picture>
+                            <source srcset="images/tosla-logo.svg" type="image/webp">
+                            <img src="images/tosla-logo.svg" alt="">
+                        </picture>
+                    </a>
+                </div>
+                <a class="header-link__partner" href="partners.html">
+                    <svg class="icon-block" width="30px" height="50px" fill="#868686">
+                        <use xlink:href="images/icons.svg#maps"></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+    <main class="main main-maps">
+        <div class="__container-main">
+            <div id="map" style="position: absolute;height:100%;max-width: 1920px;width: 100%;"></div>
+        </div>
+    </main>
+    <footer class="footer">
+
+    </footer>
+</div>
+<script>
+    // The ymaps.ready() function will be called when
+    // all the API components are loaded and the DOM tree is generated.
+    ymaps.ready(init);
+
+    function init() {
+        // Creating the map.
+        let myMap = new ymaps.Map("map", {
+            // The map center coordinates.
+            // Default order: “latitude, longitude”.
+            // To not manually determine the map center coordinates,
+            // use the Coordinate detection tool.
+            center: [49.70537464916177, 21.160814292985872],
+            // Zoom level. Acceptable values:
+            // from 0 (the entire world) to 19.
+            zoom: 3
+        }, {
+            minZoom: 3,
+            restrictMapArea: [
+                [-41.98958072378719, -158.83918570699277],
+                [83.08378438378229, -158.83918570703537]
+            ]
+        })
+        MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
+            '<div style="color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>'
+        ),
+            myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: 'Это красивая метка'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#image',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [50, 50],
+                // Смещение левого верхнего угла иконки относительно     [50.99583117782196,-114.06935654568018]
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-5, -38]
+            }),
+            myPlacemarkWithContent = new ymaps.Placemark([50.99583117782196, -114.06935654568018], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: 'А эта — новогодняя'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-5, -38],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContentt = new ymaps.Placemark([52.39289557181436, 13.541150500000004], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: 'А эта — новогодняя'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [57.706497566908986,11.968587000000005]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContenttt = new ymaps.Placemark([57.706497566908986, 11.968587000000005], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: 'Södra Hamngatan 37-41\n' +
+                    '411 06 Gothenburg'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [57.706497566908986,11.968587000000005] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContentttt = new ymaps.Placemark([60.29449156368272, 5.2543629999999535], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: 'Kokstaddalen 18\n' +
+                    '5257 Bergen'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [57.706497566908986,11.968587000000005] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContenttttt = new ymaps.Placemark([-27.454742099100198, 153.0373509999999], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: '1062 Ann Street\n' +
+                    'Fortitude Valley'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [57.706497566908986,11.968587000000005] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContentttttt = new ymaps.Placemark([57.16739858648951, -2.10079100000002], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: 'Wellington Circle\n' +
+                    'AB12 3JG Aberdeen'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [57.706497566908986,11.968587000000005] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContenttttttt = new ymaps.Placemark([41.3499095741352, 2.1333279999999735], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: 'Carrer de la Metal·lúrgia 38-42 8038 Barcelona'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [57.706497566908986,11.968587000000005] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContenttttttttt = new ymaps.Placemark([33.63290994649723, -111.8626745], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: '28721 Canwood Street Bldg A\n' +
+                    'Agoura Hills, CA 91301'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [32.11234406754415,34.795748499999995] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContentttttttttt = new ymaps.Placemark([34.14377466754912, -118.751172], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: '8300 E Raintree Drive\n' +
+                    'Scottsdale, AZ 85260'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [32.11234406754415,34.795748499999995] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContenttttttttttt = new ymaps.Placemark([25.952764487021973, -80.13675750000002], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: '8300 E Raintree Drive\n' +
+                    'Scottsdale, AZ 85260'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [32.11234406754415,34.795748499999995] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContentttttttttttt = new ymaps.Placemark([40.65434918023964, -73.94652500000002], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: 'Brooklyn-Van Brunt Street'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [32.11234406754415,34.795748499999995] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContenttttttttttttt = new ymaps.Placemark([39.94876009759675, 116.49196299999993], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: 'Beijing Chaoyang Joy City'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [32.11234406754415,34.795748499999995] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContentttttttttttttt = new ymaps.Placemark([60.2704940637148, 24.876883499999984], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: 'Helsinki-Vantaa'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [32.11234406754415,34.795748499999995] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContentttttttttttttt = new ymaps.Placemark([25.19189155779224, 55.262020499999956], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: 'Dubai Sheikh Zayed Road'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [32.11234406754415,34.795748499999995] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myPlacemarkWithContenttttttttttttttt = new ymaps.Placemark([44.83360207458658, -0.6742395000000425], {
+                hintContent: 'Автомобильый центр Tesla',
+                balloonContent: 'Бордо-Мериньяк\n'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [32.11234406754415,34.795748499999995] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            marker = new ymaps.Placemark([39.52387776409951, -116.68610899218751], {
+                hintContent: 'Гигафабрика Tesla',
+                balloonContent: 'Гигафабрика 1'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo-marker.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-10, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [32.11234406754415,34.795748499999995] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            marker2 = new ymaps.Placemark([42.951069454704474, -78.8177165981445], {
+                hintContent: 'Гигафабрика Tesla',
+                balloonContent: 'Гигафабрика 2'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo-marker.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-10, 0],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [32.11234406754415,34.795748499999995] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            marker3 = new ymaps.Placemark([30.384533450582232, -97.73767749999998], {
+                hintContent: 'Гигафабрика Tesla',
+                balloonContent: 'Гигафабрика 5 (Гига Техас)'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo-marker.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-10, -50],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [32.11234406754415,34.795748499999995] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            marker4 = new ymaps.Placemark([52.42869674862871, 13.819027621582036], {
+                hintContent: 'Гигафабрика Tesla',
+                balloonContent: 'Гигафабрика 4 (Гига Берлин)'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo-marker.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-20, -20],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [32.11234406754415,34.795748499999995] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            marker5 = new ymaps.Placemark([31.09174818009297, 121.49635837516858], {
+                hintContent: 'Гигафабрика Tesla',
+                balloonContent: 'Гигафабрика 3 (Гига Шанхай)'
+            }, {
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#imageWithContent',
+                // Своё изображение иконки метки.
+                iconImageHref: 'images/logo-marker.svg',
+                // Размеры метки.
+                iconImageSize: [48, 48],
+                // Смещение левого верхнего угла иконки относительно
+                // её "ножки" (точки привязки).
+                iconImageOffset: [-40, -20],
+                // Смещение слоя с содержимым относительно слоя с картинкой.
+
+                // Макет содержимого.           [32.11234406754415,34.795748499999995] [60.29449156368272,5.2543629999999535]
+                iconContentLayout: MyIconContentLayout
+            }),
+            myMap.geoObjects.add(myPlacemark)
+                .add(myPlacemarkWithContent)
+                .add(myPlacemarkWithContentt)
+                .add(myPlacemarkWithContenttt)
+                .add(myPlacemarkWithContentttt)
+                .add(myPlacemarkWithContenttttt)
+                .add(myPlacemarkWithContentttttt)
+                .add(myPlacemarkWithContenttttttt)
+                .add(myPlacemarkWithContenttttttttt)
+                .add(myPlacemarkWithContentttttttttt)
+                .add(myPlacemarkWithContenttttttttttt)
+                .add(myPlacemarkWithContentttttttttttt)
+                .add(myPlacemarkWithContenttttttttttttt)
+                .add(myPlacemarkWithContentttttttttttttt)
+                .add(myPlacemarkWithContenttttttttttttttt)
+                .add(marker)
+                .add(marker2)
+                .add(marker3)
+                .add(marker4)
+                .add(marker5)
+    }
+</script>
+<script src="js/main.min.js"></script>
+</body>
+</html>
